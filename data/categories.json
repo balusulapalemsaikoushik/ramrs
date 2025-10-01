@@ -1,0 +1,55 @@
+{
+    "literature": {
+        "american": {},
+        "british": {},
+        "classic": {},
+        "european": {},
+        "world": {}
+    },
+    "history": {
+        "american": {},
+        "ancient": {},
+        "european": {},
+        "world": {}
+    },
+    "science": {
+        "biology": {},
+        "chemistry": {},
+        "physics": {},
+        "math": {},
+        "astronomy": {},
+        "computer science": {},
+        "earth science": {},
+        "engineering": {}
+    },
+    "arts": {
+        "visual": {},
+        "music": {},
+        "auditory": {},
+        "architecture": {},
+        "dance": {},
+        "film": {},
+        "jazz": {},
+        "opera": {},
+        "photography": {}
+    },
+    "social science": {
+        "anthropology": {},
+        "economics": {},
+        "linguistics": {},
+        "psychology": {},
+        "sociology": {}
+    },
+    "trash": {
+        "movies": {},
+        "sports": {},
+        "television": {},
+        "video games": {},
+        "pop culture": {}
+    },
+    "geography": {},
+    "current events": {},
+    "religion": {},
+    "mythology": {},
+    "philosophy": {}
+}

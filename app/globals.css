@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+body {
+    @apply bg-slate-100;
+}
+
+h1 {
+    @apply text-6xl font-black;
+}
+
+h2 {
+    @apply text-3xl font-light;
+}
+
+.navbar-item {
+    @apply p-5;
+}
