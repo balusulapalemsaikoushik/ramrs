@@ -2,10 +2,12 @@ import categories from "@/data/categories.json";
 import Category from "./components/category/category";
 import NavBar from "./components/navbar/navbar";
 
-export default function Home() {
+export default async function Home() {
     const categoryElements: React.ReactNode[] = [];
     for (const category in categories) {
-        categoryElements.push(<Category key={category} name={category} />)
+        const data = await fetch(`${process.env.API_ENDPOINT}/${category}`);
+        const clues = await data.json();
+        categoryElements.push(<Category key={category} name={category} data={clues} />)
     }
     
     return (

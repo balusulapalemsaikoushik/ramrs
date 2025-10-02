@@ -1,6 +1,6 @@
 export default function NavBar() {
     return (
-        <div className="flex bg-white">
+        <div className="sticky top-0 flex bg-white">
             <a className="navbar-item" href="/">ramrs <Version color="sky-600" /></a>
             <div className="flex ml-auto">
                 <a className="navbar-item" href="/literature">Literature</a>

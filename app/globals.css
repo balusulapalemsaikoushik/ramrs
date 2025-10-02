@@ -12,6 +12,10 @@ h2 {
     @apply text-3xl font-light;
 }
 
+th, td {
+    @apply p-2;
+}
+
 .navbar-item {
     @apply p-5;
 }
