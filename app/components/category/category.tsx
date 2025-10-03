@@ -22,10 +22,10 @@ export default function Category({ name, data }: { name: string, data: any }) {
 
     return (
         <div>
-            <div className="flex p-5 bg-white hover:cursor-pointer" onClick={() => setExpanded((expanded) => !expanded)}>
+            <div id={name} className="flex p-5 bg-background-secondary hover:cursor-pointer" onClick={() => setExpanded((expanded) => !expanded)}>
                 <h3>{name}</h3>
                 <Image
-                    className="ml-auto"
+                    className="ml-auto dark:invert"
                     src={expanded ? ArrowDown : ArrowLeft}
                     width={24}
                     height={24}
@@ -33,7 +33,7 @@ export default function Category({ name, data }: { name: string, data: any }) {
                 />
             </div>
             <div className={`${expanded ? "block" : "hidden"} p-10`}>
-                <table className="w-1/2 m-auto text-center text-xl">
+                <table className="md:w-1/2 m-auto table-fixed text-center md:text-xl">
                     <tbody>
                         <tr>
                             <th>Clue</th>

@@ -1,14 +1,14 @@
 {
+    "history": {
+        "american": {},
+        "ancient": {},
+        "european": {},
+        "world": {}
+    },
     "literature": {
         "american": {},
         "british": {},
         "classic": {},
-        "european": {},
-        "world": {}
-    },
-    "history": {
-        "american": {},
-        "ancient": {},
         "european": {},
         "world": {}
     },
@@ -33,13 +33,7 @@
         "opera": {},
         "photography": {}
     },
-    "social science": {
-        "anthropology": {},
-        "economics": {},
-        "linguistics": {},
-        "psychology": {},
-        "sociology": {}
-    },
+    "geography": {},
     "trash": {
         "movies": {},
         "sports": {},
@@ -47,9 +41,14 @@
         "video games": {},
         "pop culture": {}
     },
-    "geography": {},
-    "current events": {},
-    "religion": {},
     "mythology": {},
-    "philosophy": {}
+    "social science": {
+        "anthropology": {},
+        "economics": {},
+        "linguistics": {},
+        "psychology": {},
+        "sociology": {}
+    },
+    "philosophy": {},
+    "religion": {}
 }

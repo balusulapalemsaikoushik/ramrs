@@ -1,6 +1,7 @@
 import categories from "@/data/categories.json";
 import Category from "./components/category/category";
 import NavBar from "./components/navbar/navbar";
+import Top from "./components/top/top";
 
 export default async function Home() {
     const categoryElements: React.ReactNode[] = [];
@@ -20,6 +21,7 @@ export default async function Home() {
                 </div>
                 <div>{categoryElements}</div>
             </div>
+            <Top />
         </div>
     );
 }

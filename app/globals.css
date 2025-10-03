@@ -1,7 +1,36 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-foreground: var(--color-black);
+    --color-background-primary: var(--color-slate-100);
+    --color-background-secondary: var(--color-white);
+    --color-version: var(--color-sky-600);
+}
+
+@layer theme {
+    :root, :host {
+        @variant dark {
+            --color-foreground: var(--color-white);
+            --color-background-primary: var(--color-gray-900);
+            --color-background-secondary: var(--color-gray-800);
+            --color-version: var(--color-sky-400);
+        }
+    }
+}
+
+html {
+    @apply scroll-smooth;
+}
+
 body {
-    @apply bg-slate-100;
+    color: var(--color-foreground);
+    background-color: var(--color-background-primary);
+}
+
+h1, h2 {
+    @apply text-center md:text-left;
 }
 
 h1 {
@@ -17,5 +46,5 @@ th, td {
 }
 
 .navbar-item {
-    @apply p-5;
+    @apply block md:inline hover:cursor-pointer p-5;
 }
