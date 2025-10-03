@@ -1,10 +1,6 @@
 "use client"
 
-import Image from "next/image";
 import { useState } from "react";
-
-import ArrowLeft from "@/public/keyboard_arrow_left_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
-import ArrowDown from "@/public/keyboard_arrow_down_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 
 export default function Category({ name, data }: { name: string, data: any }) {
     const [expanded, setExpanded] = useState(true);
@@ -24,13 +20,10 @@ export default function Category({ name, data }: { name: string, data: any }) {
         <div>
             <div id={name} className="flex p-5 bg-background-secondary hover:cursor-pointer" onClick={() => setExpanded((expanded) => !expanded)}>
                 <h3>{name}</h3>
-                <Image
-                    className="ml-auto dark:invert"
-                    src={expanded ? ArrowDown : ArrowLeft}
-                    width={24}
-                    height={24}
-                    alt="Expand/Collapse"
-                />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-auto">
+                    <path className={expanded ? "inline-block" : "hidden"} strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    <path className={expanded ? "hidden" : "inline-block"} strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
             </div>
             <div className={`${expanded ? "block" : "hidden"} p-10`}>
                 <table className="md:w-1/2 m-auto table-fixed text-center md:text-xl">

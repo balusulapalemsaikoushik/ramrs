@@ -1,9 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-
-import Menu from "@/public/menu_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 
 export default function NavBar() {
     const [height, setHeight] = useState(0);
@@ -35,13 +32,9 @@ export default function NavBar() {
                 className="p-5 hover:cursor-pointer md:hidden ml-auto"
                 onClick={() => setExpanded((expanded) => !expanded)}
             >
-                <Image
-                    className="dark:invert"
-                    src={Menu}
-                    width={24}
-                    height={24}
-                    alt="Expand/Collapse"
-                />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
             </a>
             <div className={
                 `${expanded ? "block" : "hidden"}
