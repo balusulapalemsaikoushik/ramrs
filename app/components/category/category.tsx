@@ -2,7 +2,19 @@
 
 import { useState } from "react";
 
-export default function Category({ name, data }: { name: string, data: any }) {
+interface Answer {
+    answer: string
+    category: string
+}
+
+interface Clue {
+    clue: string
+    label: string
+    answers: Answer[]
+    frequency: number
+}
+
+export default function Category({ name, data }: { name: string, data: Clue[] }) {
     const [expanded, setExpanded] = useState(true);
 
     const clues: React.ReactNode[] = [];

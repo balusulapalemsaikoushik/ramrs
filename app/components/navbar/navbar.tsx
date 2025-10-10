@@ -1,10 +1,11 @@
 "use client"
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function NavBar() {
     const [height, setHeight] = useState(0);
-    const ref: any = useRef(null);
+    const ref: React.RefObject<HTMLDivElement | null> = useRef(null);
 
     const [expanded, setExpanded] = useState(false);
 
@@ -27,15 +28,15 @@ export default function NavBar() {
 
     return (
         <div ref={ref} className="sticky top-0 flex flex-wrap bg-background-secondary">
-            <a className="navbar-item" href="/">ramrs <Version text="experimental" /></a>
-            <a
+            <Link className="navbar-item" href="/">ramrs <Version text="experimental" /></Link>
+            <button
                 className="p-5 hover:cursor-pointer md:hidden ml-auto"
                 onClick={() => setExpanded((expanded) => !expanded)}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
-            </a>
+            </button>
             <div className={
                 `${expanded ? "block" : "hidden"}
                 top-[${height}px]
