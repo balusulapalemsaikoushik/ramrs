@@ -8,15 +8,6 @@
     ],
     "frameworksBackend": {
       "region": "us-central1"
-    },
-    "rewrites": [
-      {
-        "source": "/api/**",
-        "run": {
-          "serviceId": "ramrs-api",
-          "region": "us-central1"
-        }
-      }
-    ]
+    }
   }
 }

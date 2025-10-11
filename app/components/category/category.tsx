@@ -37,8 +37,8 @@ export default function Category({ name, data }: { name: string, data: Clue[] })
                     <path className={expanded ? "hidden" : "inline-block"} strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                 </svg>
             </div>
-            <div className={`${expanded ? "block" : "hidden"} p-10`}>
-                <table className="md:w-1/2 m-auto table-fixed text-center md:text-xl">
+            <div className={`${expanded ? "flex" : "hidden"} justify-center overflow-hidden p-10`}>
+                <table className="w-full md:w-1/2 table-fixed text-center md:text-xl">
                     <tbody>
                         <tr>
                             <th>Clue</th>
