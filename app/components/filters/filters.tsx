@@ -6,7 +6,6 @@ import { FiltersContext } from "@/app/context";
 import { Info } from "../info/info";
 
 interface CheckboxFilterType {
-    id: string
     label: string
     info?: string
     value: boolean
@@ -31,7 +30,6 @@ export default function Filters() {
     return (
         <div className="flex flex-col md:flex-row gap-5 bg-background-secondary p-5">
             <CheckboxFilter
-                id="wildcards"
                 label="Show wildcard clues"
                 info="These clues are too broad to guarantee a single answer; however, the answer you see is probably a good guess."
                 value={wildcards}
@@ -41,16 +39,17 @@ export default function Filters() {
     );
 }
 
-function CheckboxFilter({ id, label, info, value, setValue }: CheckboxFilterType) {
+function CheckboxFilter({ label, info, value, setValue }: CheckboxFilterType) {
     return (
         <div>
-            <input
-                id={id}
-                type="checkbox"
-                checked={value}
-                onChange={setValue}
-            ></input>
-            <label htmlFor={id}> {label}</label>
+            <label>
+                <input
+                    type="checkbox"
+                    checked={value}
+                    onChange={setValue}
+                ></input>
+                <span> {label}</span>
+            </label>
             {info && <Info info={info} />}
         </div>
     );

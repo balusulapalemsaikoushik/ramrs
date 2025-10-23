@@ -16,7 +16,7 @@ export default function Top() {
     return (
         <button className={
             `${scrollY > 0 ? "fixed" : "hidden"}
-            z-100
+            z-200
             bottom-7
             right-7
             p-4

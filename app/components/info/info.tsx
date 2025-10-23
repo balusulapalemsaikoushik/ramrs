@@ -5,12 +5,12 @@ export function Info({ info, warning }: { info: string, warning?: boolean }) {
 
     const showInfo = () => setShowing((showing) => !showing);
 
-    let classes = "size-4 stroke-link align-text-top"; 
+    let classes = "stroke-link md:size-4 md:align-text-top"; 
     let path = <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />;
     let background = "bg-background-primary";
     let offset = "md:top-3 md:left-3";
     if (warning) {
-        classes = "size-6 stroke-warning align-text-bottom";
+        classes = "stroke-warning";
         path = <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />;
         background = "bg-background-secondary";
         offset = "md:top-5 md:left-5";
@@ -23,15 +23,15 @@ export function Info({ info, warning }: { info: string, warning?: boolean }) {
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
-                className={`inline hover:cursor-pointer ${classes}`}
+                className={`inline hover:cursor-pointer size-6 align-text-bottom ${classes}`}
                 onClick={showInfo}
             >
                 {path}
             </svg>
             <div className={
-                `z-50
+                `z-100
                 ${background}
-                p-1
+                p-2
                 rounded-sm
                 absolute
                 top-6

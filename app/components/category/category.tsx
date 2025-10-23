@@ -13,6 +13,7 @@ interface AnswerType {
 interface ClueType {
     clue: string
     label: string
+    answer: AnswerType | null
     answers: AnswerType[]
     wildcard: boolean
     frequency: number
@@ -68,7 +69,7 @@ function Clue({ clue }: { clue: ClueType }) {
                     <Info info="This is a wildcard." warning />
                 )} {clue.clue}
             </td>
-            <td>{clue.answers[0].answer}</td>
+            <td>{clue.answer !== null ? clue.answer.answer : clue.answers[0].answer}</td>
         </tr>
     );
 }
