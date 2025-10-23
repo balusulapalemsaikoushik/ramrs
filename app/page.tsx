@@ -2,6 +2,7 @@ import categories from "@/data/categories.json";
 import Category from "./components/category/category";
 import NavBar from "./components/navbar/navbar";
 import Top from "./components/top/top";
+import Content from "./components/content/content";
 
 export default async function Home() {
     const categoryElements: React.ReactNode[] = [];
@@ -19,7 +20,7 @@ export default async function Home() {
                     <h1>ramrs</h1>
                     <h2>the original qb stock list</h2>
                 </div>
-                <div>{categoryElements}</div>
+                <Content categoryElements={categoryElements} />
             </div>
             <Top />
         </div>

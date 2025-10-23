@@ -27,7 +27,7 @@ export default function NavBar() {
     };
 
     return (
-        <div ref={ref} className="sticky top-0 flex flex-wrap bg-background-secondary">
+        <div ref={ref} className="z-100 sticky top-0 flex flex-wrap bg-background-secondary">
             <Link className="navbar-item" href="/">ramrs <Version text="experimental" /></Link>
             <button
                 className="p-5 hover:cursor-pointer md:hidden ml-auto"

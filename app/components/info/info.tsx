@@ -1,0 +1,48 @@
+import { useState } from "react";
+
+export function Info({ info, warning }: { info: string, warning?: boolean }) {
+    const [showing, setShowing] = useState(false);
+
+    const showInfo = () => setShowing((showing) => !showing);
+
+    let classes = "size-4 stroke-link align-text-top"; 
+    let path = <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />;
+    let background = "bg-background-primary";
+    let offset = "md:top-3 md:left-3";
+    if (warning) {
+        classes = "size-6 stroke-warning align-text-bottom";
+        path = <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />;
+        background = "bg-background-secondary";
+        offset = "md:top-5 md:left-5";
+    }
+
+    return (
+        <div className="relative inline">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                className={`inline hover:cursor-pointer ${classes}`}
+                onClick={showInfo}
+            >
+                {path}
+            </svg>
+            <div className={
+                `z-50
+                ${background}
+                p-1
+                rounded-sm
+                absolute
+                top-6
+                w-max
+                max-w-[75vw]
+                md:max-w-sm
+                ${offset}
+                ${showing ? "block": "hidden"}`
+            }>
+                <p className="text-xs">{info}</p>
+            </div>
+        </div>
+    );
+}

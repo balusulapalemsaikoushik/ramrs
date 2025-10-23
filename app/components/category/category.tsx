@@ -1,30 +1,30 @@
 "use client"
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-interface Answer {
+import { FiltersContext } from "@/app/context";
+import { Info } from "../info/info";
+
+interface AnswerType {
     answer: string
     category: string
 }
 
-interface Clue {
+interface ClueType {
     clue: string
     label: string
-    answers: Answer[]
+    answers: AnswerType[]
+    wildcard: boolean
     frequency: number
 }
 
-export default function Category({ name, data }: { name: string, data: Clue[] }) {
+export default function Category({ name, data }: { name: string, data: ClueType[] }) {
     const [expanded, setExpanded] = useState(true);
 
     const clues: React.ReactNode[] = [];
     for (let i = 0; i < data.length; i++) {
-        const clue = data[i];
         clues.push(
-            <tr key={i}>
-                <td>{clue["clue"]}</td>
-                <td>{clue["answers"][0]["answer"]}</td>
-            </tr>
+            <Clue clue={data[i]} key={i} />
         );
     }
 
@@ -49,5 +49,26 @@ export default function Category({ name, data }: { name: string, data: Clue[] })
                 </table>
             </div>
         </div>
+    );
+}
+
+function Clue({ clue }: { clue: ClueType }) {
+    const filtersContext = useContext(FiltersContext);
+
+    if (filtersContext === undefined) {
+        throw new Error("Filters context not found.");
+    }
+
+    const filters = filtersContext!.filters;
+    const visible = !clue.wildcard || (clue.wildcard && filters.wildcards);
+    return (
+        <tr className={visible ? "table-row" : "hidden"}>
+            <td>
+                {clue.wildcard && (
+                    <Info info="This is a wildcard." warning />
+                )} {clue.clue}
+            </td>
+            <td>{clue.answers[0].answer}</td>
+        </tr>
     );
 }
