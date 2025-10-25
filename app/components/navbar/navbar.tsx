@@ -10,10 +10,12 @@ export default function NavBar() {
     const [expanded, setExpanded] = useState(false);
 
     useEffect(() => {
-        if (ref.current) {
-            setHeight(ref.current.offsetHeight);
-        }
-    });
+        window.addEventListener("scroll", () => {
+            if (ref.current) {
+                setHeight(ref.current.offsetHeight);
+            }
+        });
+    }, []);
 
     const scrollToCategory = (category: string) => {
         if (ref.current) {
@@ -59,5 +61,5 @@ export default function NavBar() {
 }
 
 function Version({ text }: { text: string }) {
-    return <span className={`p-1 text-version border-1 border-version rounded`}>{text}</span>
+    return <span className={`p-1 text-version border border-version rounded`}>{text}</span>
 }

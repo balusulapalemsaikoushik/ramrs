@@ -1,13 +1,13 @@
 {
-  "hosting": {
-    "source": ".",
+  "apphosting": {
+    "backendId": "ramrs",
+    "rootDir": "/",
     "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "frameworksBackend": {
-      "region": "us-central1"
-    }
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "functions"
+    ]
   }
 }
