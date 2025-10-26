@@ -5,11 +5,11 @@ import Top from "./components/top/top";
 import Content from "./components/content/content";
 
 export default async function Home() {
+    const data = await fetch(`${process.env.API_ENDPOINT}/clues`, { cache: "no-store" });
+    const clues = await data.json();
     const categoryElements: React.ReactNode[] = [];
     for (const category in categories) {
-        const data = await fetch(`${process.env.API_ENDPOINT}/${category}`, { cache: "no-store" });
-        const clues = await data.json();
-        categoryElements.push(<Category key={category} name={category} data={clues} />)
+        categoryElements.push(<Category key={category} name={category} data={clues[category]} />);
     }
     
     return (
