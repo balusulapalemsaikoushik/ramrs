@@ -9,6 +9,7 @@
     --color-version: var(--color-sky-600);
     --color-link: var(--color-slate-500);
     --color-warning: var(--color-amber-500);
+    --color-confirmation: var(--color-green-600);
 }
 
 @layer theme {
@@ -20,6 +21,7 @@
             --color-version: var(--color-sky-400);
             --color-link: var(--color-gray-400);
             --color-warning: var(--color-amber-300);
+            --color-confirmation: var(--color-emerald-300);
         }
     }
 }

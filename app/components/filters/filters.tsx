@@ -21,20 +21,27 @@ export default function Filters() {
     
     const [filters, setFilters] = [filtersContext!.filters, filtersContext!.setFilters];
     const [wildcards, setWildcards] = useState(filters.wildcards);
+    const [unverified, setUnverified] = useState(filters.unverified);
 
     const showWildcards = () => {
         setFilters({ ...filters, wildcards: !filters.wildcards });
         setWildcards(!wildcards);
     };
 
+    const showUnverified = () => {
+        setFilters({ ...filters, unverified: !filters.unverified });
+        setUnverified(!unverified);
+    };
+
     return (
-        <div className="flex flex-col md:flex-row gap-5 bg-background-secondary p-5">
+        <div className="flex flex-col md:flex-row gap-3 bg-background-secondary p-5">
             <CheckboxFilter
                 label="Show wildcard clues"
                 info="These clues are too broad to guarantee a single answer; however, the answer you see is probably a good guess."
                 value={wildcards}
                 setValue={showWildcards}
             />
+            <CheckboxFilter label="Show unverified clues" value={unverified} setValue={showUnverified} />
         </div>
     );
 }

@@ -2,6 +2,7 @@ import { createContext, SetStateAction } from "react";
 
 interface FiltersType {
     wildcards: boolean
+    unverified: boolean
 }
 
 interface FiltersContextType {

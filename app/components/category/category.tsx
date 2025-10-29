@@ -61,15 +61,24 @@ function Clue({ clue }: { clue: ClueType }) {
     }
 
     const filters = filtersContext!.filters;
-    const visible = !clue.wildcard || (clue.wildcard && filters.wildcards);
+    const verified = clue.answer !== null;
+    const visible = (
+        ((!filters.wildcards && !filters.unverified) && verified)
+        || ((filters.wildcards && !filters.unverified) && (verified || clue.wildcard))
+        || ((!filters.wildcards && filters.unverified) && !clue.wildcard)
+        || (filters.wildcards && filters.unverified)
+    );
     return (
         <tr className={visible ? "table-row" : "hidden"}>
             <td>
+                {(verified && !clue.wildcard) && (
+                    <Info info="This clue has been verified by a ramrs moderator." confirmation />
+                )}
                 {clue.wildcard && (
                     <Info info="This is a wildcard." warning />
                 )} {clue.clue}
             </td>
-            <td>{clue.answer !== null ? clue.answer.answer : clue.answers[0].answer}</td>
+            <td>{verified ? clue.answer!.answer : clue.answers[0].answer}</td>
         </tr>
     );
 }

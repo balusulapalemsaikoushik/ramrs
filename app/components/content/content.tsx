@@ -6,7 +6,7 @@ import { FiltersContext } from "@/app/context";
 import Filters from "../filters/filters";
 
 export default function Content({ categoryElements }: { categoryElements: React.ReactNode[] }) {
-    const [filters, setFilters] = useState({ wildcards: false })
+    const [filters, setFilters] = useState({ wildcards: false, unverified: true });
 
     return (
         <FiltersContext.Provider value={{ filters, setFilters }}>
