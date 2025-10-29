@@ -63,7 +63,7 @@ function Clue({ clue }: { clue: ClueType }) {
     const filters = filtersContext!.filters;
     const verified = clue.answer !== null;
     const visible = (
-        ((!filters.wildcards && !filters.unverified) && verified)
+        ((!filters.wildcards && !filters.unverified) && (verified && !clue.wildcard))
         || ((filters.wildcards && !filters.unverified) && (verified || clue.wildcard))
         || ((!filters.wildcards && filters.unverified) && !clue.wildcard)
         || (filters.wildcards && filters.unverified)
