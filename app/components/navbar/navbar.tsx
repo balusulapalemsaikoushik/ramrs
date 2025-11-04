@@ -41,7 +41,6 @@ export default function NavBar() {
             </button>
             <div className={
                 `${expanded ? "block" : "hidden"}
-                top-[${height}px]
                 grow
                 basis-full
                 md:grow-0
