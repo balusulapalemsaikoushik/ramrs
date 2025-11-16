@@ -6,7 +6,7 @@ export default function NotFound() {
             <div className="p-10">
                 <h1>404</h1>
                 <p className="mt-5">
-                    That page doesn&apos;t seem to exist. Go back to <Link className="text-link underline" href="/">ramrs</Link>
+                    That page doesn&apos;t seem to exist. Go back to <Link className="link" href="/">ramrs</Link>
                 </p>
             </div>
         </div>

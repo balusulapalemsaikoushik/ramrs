@@ -1,34 +1,11 @@
 "use client"
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 export default function NavBar() {
-    const [height, setHeight] = useState(0);
-    const ref: React.RefObject<HTMLDivElement | null> = useRef(null);
-
     const [expanded, setExpanded] = useState(false);
     const [showCategories, setShowCategories] = useState(false);
-
-    useEffect(() => {
-        window.addEventListener("scroll", () => {
-            if (ref.current) {
-                setHeight(ref.current.offsetHeight);
-            }
-        });
-    }, []);
-
-    const scrollToCategory = (category: string) => {
-        if (ref.current) {
-            const categoryElement = document.getElementById(category);
-            if (categoryElement) {
-                const scrollPosition = categoryElement.offsetTop - height;
-                window.scrollTo({ top: scrollPosition });
-                setExpanded(false);
-                setShowCategories(false);
-            }
-        }
-    };
 
     const expand = () => {
         setExpanded((expanded) => !expanded);
@@ -36,7 +13,7 @@ export default function NavBar() {
     }
 
     return (
-        <div ref={ref} className={
+        <div className={
             `z-300
             sticky
             top-0
@@ -75,7 +52,7 @@ export default function NavBar() {
                         </svg>
                     </button>
                     <div className={
-                        `bg-background-primary
+                        `bg-background-tertiary
                         ${showCategories ? "flex": "hidden"}
                         flex-col
                         md:bg-background-secondary
@@ -85,16 +62,16 @@ export default function NavBar() {
                         md:h-80
                         overflow-auto`
                     }>
-                        <a className="navbar-item" onClick={() => scrollToCategory("history")}>History</a>
-                        <a className="navbar-item" onClick={() => scrollToCategory("literature")}>Literature</a>
-                        <a className="navbar-item" onClick={() => scrollToCategory("science")}>Science</a>
-                        <a className="navbar-item" onClick={() => scrollToCategory("arts")}>Fine Arts</a>
-                        <a className="navbar-item" onClick={() => scrollToCategory("geography")}>Geography</a>
-                        <a className="navbar-item" onClick={() => scrollToCategory("trash")}>Trash</a>
-                        <a className="navbar-item" onClick={() => scrollToCategory("mythology")}>Mythology</a>
-                        <a className="navbar-item" onClick={() => scrollToCategory("social science")}>Social Science</a>
-                        <a className="navbar-item" onClick={() => scrollToCategory("philosophy")}>Philosophy</a>
-                        <a className="navbar-item" onClick={() => scrollToCategory("religion")}>Religion</a>
+                        <Link className="navbar-item" href="/history">History</Link>
+                        <Link className="navbar-item" href="/literature">Literature</Link>
+                        <Link className="navbar-item" href="/science">Science</Link>
+                        <Link className="navbar-item" href="/arts">Fine Arts</Link>
+                        <Link className="navbar-item" href="/geography">Geography</Link>
+                        <Link className="navbar-item" href="/trash">Trash</Link>
+                        <Link className="navbar-item" href="/mythology">Mythology</Link>
+                        <Link className="navbar-item" href="/social science">Social Science</Link>
+                        <Link className="navbar-item" href="/philosophy">Philosophy</Link>
+                        <Link className="navbar-item" href="/religion">Religion</Link>
                     </div>
                 </div>
             </div>
