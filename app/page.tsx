@@ -13,16 +13,16 @@ export default async function Home() {
                     <h2>the original qb stock list</h2>
                     <p className="mt-10">ramrs is a grand list of Quiz Bowl (QB) &quot;stock,&quot; or clues that frequently appear in QB questions and generally point to a single answer. The current database has ~60k clues (and growing!) and serves as a helpful study tool for players looking to win their next QB tournament. To get started, click on one of the categories below:</p>
                     <div className="mt-10 flex flex-col md:flex-row gap-5 flex-wrap justify-center">
-                        <Link className="homepage-category" href="/history">History</Link>
-                        <Link className="homepage-category" href="/literature">Literature</Link>
-                        <Link className="homepage-category" href="/science">Science</Link>
-                        <Link className="homepage-category" href="/arts">Fine Arts</Link>
-                        <Link className="homepage-category" href="/geography">Geography</Link>
-                        <Link className="homepage-category" href="/trash">Trash</Link>
-                        <Link className="homepage-category" href="/mythology">Mythology</Link>
-                        <Link className="homepage-category" href="/social science">Social Science</Link>
-                        <Link className="homepage-category" href="/philosophy">Philosophy</Link>
-                        <Link className="homepage-category" href="/religion">Religion</Link>
+                        <Link className="button" href="/history">History</Link>
+                        <Link className="button" href="/literature">Literature</Link>
+                        <Link className="button" href="/science">Science</Link>
+                        <Link className="button" href="/arts">Fine Arts</Link>
+                        <Link className="button" href="/geography">Geography</Link>
+                        <Link className="button" href="/trash">Trash</Link>
+                        <Link className="button" href="/mythology">Mythology</Link>
+                        <Link className="button" href="/social science">Social Science</Link>
+                        <Link className="button" href="/philosophy">Philosophy</Link>
+                        <Link className="button" href="/religion">Religion</Link>
                     </div>
                 </div>
                 <div className="bg-background-tertiary grid md:grid-cols-2">

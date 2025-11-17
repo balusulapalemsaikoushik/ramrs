@@ -15,13 +15,10 @@ export default async function Page({ params }: { params: Promise<{ category: str
     return (
         <div className="page">
             <NavBar />
-            <div>
-                <div className="p-10">
-                    <h1>{category}</h1>
-                    <h2>{category} clues</h2>
-                </div>
-                <Content categoryElements={[<Category key={category} name={category} data={clues} />]} />
-            </div>
+            <Content
+                category={category}
+                categoryElements={[<Category key={category} name={category} data={clues} />]}
+            />
             <Top />
             <Copyright />
         </div>

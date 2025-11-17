@@ -4,19 +4,18 @@ interface InfoType {
     info: string
     warning?: boolean
     confirmation?: boolean
+    onButton?: boolean
 }
 
-export function Info({ info, warning, confirmation }: InfoType) {
+export function Info({ info, warning, confirmation, onButton }: InfoType) {
     const [showing, setShowing] = useState(false);
 
     const showInfo = () => setShowing((showing) => !showing);
 
     let classes = "stroke-link md:size-4 md:align-text-top"; 
     let path = <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />;
-    let background = "bg-background-primary";
     let offset = "md:top-3 md:left-3";
     if (warning || confirmation) {
-        background = "bg-background-secondary";
         offset = "md:top-5 md:left-5";
         if (warning) {
             classes = "stroke-warning";
@@ -41,7 +40,7 @@ export function Info({ info, warning, confirmation }: InfoType) {
             </svg>
             <div className={
                 `z-100
-                ${background}
+                bg-background-tertiary
                 p-2
                 rounded-sm
                 text-left
@@ -50,6 +49,7 @@ export function Info({ info, warning, confirmation }: InfoType) {
                 w-max
                 max-w-[75vw]
                 md:max-w-sm
+                ${onButton ? "right-0 md:right-auto" : ""}
                 ${offset}
                 ${showing ? "block": "hidden"}`
             }>

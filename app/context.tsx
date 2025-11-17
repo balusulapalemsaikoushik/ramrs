@@ -11,3 +11,14 @@ interface FiltersContextType {
 }
 
 export const FiltersContext = createContext<FiltersContextType | null>(null);
+
+export interface ExportType {
+    [clue: string]: string
+}
+
+interface ExportContextType {
+    exports: ExportType
+    setExports: React.Dispatch<SetStateAction<ExportType>>
+}
+
+export const ExportContext = createContext<ExportContextType | null>(null);
