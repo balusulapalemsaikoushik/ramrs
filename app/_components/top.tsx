@@ -20,7 +20,7 @@ export default function Top() {
             bottom-7
             right-7
             p-4
-            hover:cursor-pointer
+            cursor-pointer
             rounded-full
             bg-background-secondary`
         } onClick={scrollToTop}>

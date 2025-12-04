@@ -1,13 +1,15 @@
+"use client"
+
 import { useState } from "react";
 
-interface InfoType {
+interface InfoProps {
     info: string
     warning?: boolean
     confirmation?: boolean
     onButton?: boolean
 }
 
-export function Info({ info, warning, confirmation, onButton }: InfoType) {
+export function Info({ info, warning, confirmation, onButton }: InfoProps) {
     const [showing, setShowing] = useState(false);
 
     const showInfo = () => setShowing((showing) => !showing);
@@ -33,7 +35,7 @@ export function Info({ info, warning, confirmation, onButton }: InfoType) {
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
-                className={`inline hover:cursor-pointer size-6 align-text-bottom ${classes}`}
+                className={`inline cursor-pointer size-6 align-text-bottom ${classes}`}
                 onClick={showInfo}
             >
                 {path}

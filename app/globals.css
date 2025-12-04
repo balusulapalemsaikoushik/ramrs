@@ -11,6 +11,7 @@
     --color-link: var(--color-slate-500);
     --color-warning: var(--color-amber-500);
     --color-confirmation: var(--color-green-600);
+    --color-error: var(--color-red-600);
 }
 
 @layer theme {
@@ -24,6 +25,7 @@
             --color-link: var(--color-gray-400);
             --color-warning: var(--color-amber-300);
             --color-confirmation: var(--color-emerald-300);
+            --color-error: var(--color-rose-500);
         }
     }
 }
@@ -62,7 +64,7 @@ th, td {
 }
 
 .navbar-item {
-    @apply block md:inline hover:cursor-pointer p-5;
+    @apply block md:inline cursor-pointer text-left p-5;
 }
 
 .button {
@@ -71,4 +73,16 @@ th, td {
 
 .link {
     @apply text-link underline;
+}
+
+.filter-bar {
+    @apply flex flex-col md:flex-row gap-3 bg-background-secondary p-5;
+}
+
+.input {
+    @apply bg-background-primary p-2 rounded;
+}
+
+select.input {
+    @apply cursor-pointer;
 }

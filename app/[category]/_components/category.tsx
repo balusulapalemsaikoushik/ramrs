@@ -1,20 +1,10 @@
 "use client"
 
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import { ExportContext, FiltersContext } from "@/app/context";
-import { Info } from "../info/info";
-
-interface ClueType {
-    _id: string
-    clue: string
-    label: string
-    verified: boolean
-    answer: string
-    category: string
-    wildcard: boolean
-    frequency: number
-}
+import { Info } from "../../_components/info";
+import { ClueType } from "@/types/clues";
 
 export default function Category({ name, data }: { name: string, data: ClueType[] }) {
     const [expanded, setExpanded] = useState(true);
@@ -29,7 +19,7 @@ export default function Category({ name, data }: { name: string, data: ClueType[
 
     return (
         <div>
-            <div id={name} className="flex p-5 bg-background-secondary hover:cursor-pointer" onClick={() => setExpanded((expanded) => !expanded)}>
+            <div id={name} className="flex p-5 bg-background-secondary cursor-pointer" onClick={() => setExpanded((expanded) => !expanded)}>
                 <h4>{name}</h4>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-auto">
                     <path className={expanded ? "inline-block" : "hidden"} strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -46,7 +36,7 @@ export default function Category({ name, data }: { name: string, data: ClueType[
                                     `text-xs
                                     font-normal
                                     underline
-                                    hover:cursor-pointer`
+                                    cursor-pointer`
                                 }>
                                     {allSelected ? "Deselect All" : "Select All"}
                                 </button>
@@ -83,7 +73,7 @@ function Clue({ clue, allSelected }: { clue: ClueType, allSelected: boolean }) {
     const setExports = exportContext!.setExports;
     const [exported, setExported] = useState(false);
     
-    const addRemoveExport = (add: boolean) => {
+    const addRemoveExport = useCallback((add: boolean) => {
         if (visible) {
             setExports((exports) => {
                 const value = clue.clue;
@@ -97,9 +87,9 @@ function Clue({ clue, allSelected }: { clue: ClueType, allSelected: boolean }) {
             });
             setExported(add);
         }
-    }
+    }, [visible, clue, setExports, setExported]);
 
-    useEffect(() => addRemoveExport(allSelected), [allSelected]);
+    useEffect(() => addRemoveExport(allSelected), [allSelected, addRemoveExport]);
 
     return (
         <tr className={visible ? "table-row" : "hidden"}>
@@ -116,7 +106,7 @@ function Clue({ clue, allSelected }: { clue: ClueType, allSelected: boolean }) {
                         `bg-background-tertiary
                         border
                         rounded
-                        hover:cursor-pointer`
+                        cursor-pointer`
                     }>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
                             <path className={`${exported ? "hidden" : "inline-block"}`} strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

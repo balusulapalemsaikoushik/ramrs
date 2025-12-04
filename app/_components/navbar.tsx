@@ -3,18 +3,20 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export default function NavBar() {
+export default function NavBar({ username }: { username?: string }) {
     const [expanded, setExpanded] = useState(false);
     const [showCategories, setShowCategories] = useState(false);
+    const [showUserActions, setShowUserActions] = useState(false);
 
     const expand = () => {
         setExpanded((expanded) => !expanded);
         setShowCategories(true);
+        setShowUserActions(true);
     }
 
     return (
         <div className={
-            `z-300
+            `z-400
             sticky
             top-0
             flex
@@ -28,7 +30,7 @@ export default function NavBar() {
             md:overflow-visible`
         }>
             <Link className="navbar-item" href="/">ramrs <Version text="experimental" /></Link>
-            <button className="p-5 hover:cursor-pointer md:hidden ml-auto" onClick={expand}>
+            <button className="p-5 cursor-pointer md:hidden ml-auto" onClick={expand}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
@@ -44,7 +46,13 @@ export default function NavBar() {
                 md:ml-auto`
             }>
                 <div className="relative">
-                    <button className="navbar-item flex! w-full md:inline! md:w-auto" onClick={() => setShowCategories((showCategories) => !showCategories)}>
+                    <button className={
+                        `navbar-item
+                        flex!
+                        w-full
+                        md:inline!
+                        md:w-auto`
+                    } onClick={() => setShowCategories((showCategories) => !showCategories)}>
                         <span>Categories </span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="inline ml-auto size-6 md:size-5 md:align-text-bottom">
                             <path className={showCategories ? "inline-block" : "hidden"} strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -74,6 +82,52 @@ export default function NavBar() {
                         <Link className="navbar-item" href="/religion">Religion</Link>
                     </div>
                 </div>
+                {username !== undefined ? (
+                    <div className="relative">
+                        <button className={
+                            `navbar-item
+                            w-full
+                            md:w-auto`
+                        } onClick={() => setShowUserActions((showUserActions) => !showUserActions)}>
+                            {username}
+                        </button>
+                        <div className={
+                            `bg-background-tertiary
+                            ${showUserActions ? "flex": "hidden"}
+                            flex-col
+                            md:bg-background-secondary
+                            md:absolute
+                            md:right-0
+                            md:w-full
+                            overflow-auto`
+                        }>
+                            <Link className="navbar-item" href="/dashboard">Dashboard</Link>
+                            {
+                                /* eslint-disable @next/next/no-html-link-for-pages */
+                                <a className="navbar-item flex!" href="/auth/logout">
+                                    <span>Logout </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-auto">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                                    </svg>
+                                </a>
+                                /* eslint-enable @next/next/no-html-link-for-pages */
+                            }
+                        </div>
+                    </div>
+                ) : (
+                    <div className="flex flex-col justify-center p-5 md:px-3 md:py-0">
+                        {
+                            /* eslint-disable @next/next/no-html-link-for-pages */
+                            <a className="text-center bg-background-primary rounded p-5 md:px-3 md:py-2" href="/auth/login">
+                                <span>Login </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 inline align-text-bottom">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
+                                </svg>
+                            </a>
+                            /* eslint-enable @next/next/no-html-link-for-pages */
+                        }
+                    </div>
+                )}
             </div>
         </div>
     );

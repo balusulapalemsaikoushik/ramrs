@@ -1,4 +1,4 @@
-import Wheel from "./components/wheel/wheel";
+import Wheel from "./_components/wheel";
 
 export default function Loading() {
     return (

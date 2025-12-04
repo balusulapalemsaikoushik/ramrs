@@ -1,7 +1,7 @@
 "use client"
 
 import { useContext, useState } from "react";
-import { Info } from "../info/info";
+import { Info } from "../../_components/info";
 import { ExportContext } from "@/app/context";
 
 export default function Export() {
@@ -42,17 +42,17 @@ export default function Export() {
     return (
         <>
             <div className="relative flex flex-col">
-                <button className="button hover:cursor-pointer" onClick={show}>
+                <button className="button cursor-pointer" onClick={show}>
                     Export Terms
                 </button>
                 <div className="absolute top-1 right-1">
                     <Info onButton info="Export selected clues to a format usable by flashcard apps so that you can study stock using flashcards, quizzes, and games." />
                 </div>
             </div>
-            <div className={showing ? "block" : "hidden"}>
+            <div className={`contents ${showing ? "block" : "hidden"}`}>
                 <div onClick={exit} className={
                     `hidden
-                    z-400
+                    z-500
                     fixed
                     top-0
                     left-0
@@ -63,7 +63,7 @@ export default function Export() {
                     md:block`
                 }></div>
                 <div className={
-                    `z-500
+                    `z-600
                     flex
                     flex-col
                     p-10
@@ -81,17 +81,15 @@ export default function Export() {
                     md:rounded-xl
                     md:shadow-2xl`
                 }>
-                    <button className="p-3 absolute top-0 right-0 hover:cursor-pointer" onClick={exit}>
+                    <button className="p-3 absolute top-0 right-0 cursor-pointer" onClick={exit}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>
                     </button>
                     <h2>export clues</h2>
                     <div className="relative mt-10 grow">
-                        <textarea readOnly value={result} className={`
-                            bg-background-primary
-                            rounded
-                            p-2
+                        <textarea readOnly value={result} className={
+                            `input
                             w-full
                             h-full
                             resize-none`
@@ -103,7 +101,7 @@ export default function Export() {
                             right-2
                             p-2
                             rounded
-                            ${copied ? "" : "hover:cursor-pointer"}`
+                            ${copied ? "cursor-default" : "cursor-pointer"}`
                         }>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 md:size-5">
                                 <path className={`${copied ? "hidden" : "inline-block"}`} strokeLinecap="round" strokeLinejoin="round" d="M16.5 8.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5h2.25m8.25-8.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-7.5A2.25 2.25 0 0 1 8.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 0 0-2.25 2.25v6" />

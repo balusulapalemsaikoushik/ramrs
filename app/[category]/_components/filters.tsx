@@ -3,9 +3,9 @@
 import { useContext, useState } from "react";
 
 import { FiltersContext } from "@/app/context";
-import { Info } from "../info/info";
+import { Info } from "../../_components/info";
 
-interface CheckboxFilterType {
+interface CheckboxFilterProps {
     label: string
     info?: string
     value: boolean
@@ -34,7 +34,7 @@ export default function Filters() {
     };
 
     return (
-        <div className="flex flex-col md:flex-row gap-3 bg-background-secondary p-5">
+        <div className="filter-bar">
             <CheckboxFilter
                 label="Show wildcard clues"
                 info="These clues are too broad to guarantee a single answer; however, the answer you see is probably a good guess."
@@ -46,7 +46,7 @@ export default function Filters() {
     );
 }
 
-function CheckboxFilter({ label, info, value, setValue }: CheckboxFilterType) {
+function CheckboxFilter({ label, info, value, setValue }: CheckboxFilterProps) {
     return (
         <div>
             <label>

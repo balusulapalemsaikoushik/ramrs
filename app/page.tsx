@@ -1,12 +1,15 @@
 import Link from "next/link";
-import NavBar from "./components/navbar/navbar";
-import Copyright from "./components/copyright/copyright";
-import Top from "./components/top/top";
+import NavBar from "./_components/navbar";
+import Copyright from "./_components/copyright";
+import Top from "./_components/top";
+import { getUsername } from "@/lib/auth";
 
 export default async function Home() {
+    const username = await getUsername();
+
     return (
         <div className="page">
-            <NavBar />
+            <NavBar username={username} />
             <div>
                 <div className="p-10">
                     <h1>ramrs</h1>
