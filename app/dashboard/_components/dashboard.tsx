@@ -7,6 +7,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChangeEventHandler, MouseEventHandler, SetStateAction, useCallback, useEffect, useState } from "react";
 
+interface DashboardProps {
+    category?: string
+    nresults?: string
+    clues?: ClueType[]
+}
+
 interface ConfirmationType {
     visible: boolean
     clue_id: string
@@ -39,7 +45,7 @@ interface ActionButtonProps {
     onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-export default function Dashboard({ category, clues }: { category?: string, clues?: ClueType[] }) {
+export default function Dashboard({ category, nresults, clues }: DashboardProps) {
     const [confirmation, setConfirmation] = useState({} as ConfirmationType);
 
     const categoryKeys = Object.keys(categories);
@@ -50,24 +56,34 @@ export default function Dashboard({ category, clues }: { category?: string, clue
     }
 
     const [searchCategory, setSearchCategory] = useState(category !== undefined ? category : categoryKeys[0]);
+    const [searchNresults, setSearchNresults] = useState(nresults !== undefined ? nresults : "100");
 
     const pathname = usePathname();
-    const search = async () => {
-        const params = new URLSearchParams();
-        params.set("category", searchCategory);
-        window.location.href = `${pathname}?${params.toString()}`;
+    const search = () => {
+        if (searchNresults.length > 0) {
+            const nresultsNumber = Number(searchNresults);
+            if (!isNaN(nresultsNumber) && Number.isInteger(nresultsNumber)) {
+                if (nresultsNumber >= 0) {
+                    const params = new URLSearchParams();
+                    params.set("category", searchCategory);
+                    params.set("nresults", nresultsNumber.toString());
+                    window.location.href = `${pathname}?${params.toString()}`;
+                }
+            }
+        }
     };
-    const clear = async () => {
+    const clear = () => {
         window.location.href = pathname;
+    }
+    const refresh = () => {
+        window.location.reload();
     }
 
     const clueElements = [];
     if (clues !== undefined) {
         for (let i = 0; i < clues.length; i++) {
             const clue = clues[i];
-            if (!clue.verified) {
-                clueElements.push(<Clue key={i} clue={clue} setConfirmation={setConfirmation} />);
-            }
+            clueElements.push(<Clue key={i} clue={clue} setConfirmation={setConfirmation} />);
         }
     }
 
@@ -90,13 +106,27 @@ export default function Dashboard({ category, clues }: { category?: string, clue
                             {categoryOptions}
                         </select>
                     </label>
+                    <label>
+                        <input
+                            className="input w-16"
+                            type="text"
+                            value={searchNresults}
+                            onChange={(e) => setSearchNresults(e.target.value)}
+                        />
+                        <span> results</span>
+                    </label>
                     <div className="grid grid-cols-2 gap-1 md:flex">
                         <FilterButton text="Search" onClick={search} />
                         <FilterButton text="Clear" onClick={clear} />
                     </div>
                 </div>
                 {clueElements.length > 0 ? (
-                    <div>{clueElements}</div>
+                    <div>
+                        <div>{clueElements}</div>
+                        <div className="p-5 flex flex-col justify-center md:flex-row">
+                            <button className="button cursor-pointer" onClick={refresh}>Refresh Results</button>
+                        </div>
+                    </div>
                 ) : (
                     <div className="p-10 text-center">
                         <p>Perform a search to get started...</p>

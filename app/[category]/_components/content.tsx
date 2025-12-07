@@ -21,7 +21,8 @@ export default function Content({ isModerator, category, categoryElements }: Con
     if (isModerator) {
         const params = new URLSearchParams();
         params.set("category", category);
-        moderatorRoute = `/dashboard?${params}`
+        params.set("nresults", "100");
+        moderatorRoute = `/dashboard?${params}`;
     }
 
     return (

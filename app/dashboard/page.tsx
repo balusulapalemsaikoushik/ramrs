@@ -6,7 +6,7 @@ import Top from "../_components/top";
 import Copyright from "../_components/copyright";
 import { getClues } from "@/lib/clues";
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ category: string }> }) {
+export default async function Page({ searchParams }: { searchParams: Promise<{ category: string, nresults?: string }> }) {
     const session = await auth0.getSession();
 
     if (!session) {
@@ -15,10 +15,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
         redirect(`/auth/login?${params.toString()}`);
     }
 
+    const { category, nresults } = await searchParams;
     let clues = undefined;
-    const { category } = await searchParams;
     if (category !== undefined) {
-        clues = await getClues(category);
+        clues = await getClues(category, nresults, false);
     }
 
     return (
@@ -28,7 +28,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
                 <h1>dashboard</h1>
                 <h2>moderator dashboard</h2>
             </div>
-            <Dashboard category={category} clues={clues} />
+            <Dashboard category={category} nresults={nresults} clues={clues} />
             <Top />
             <Copyright />
         </div>
