@@ -17,8 +17,11 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
 
     const { category, nresults } = await searchParams;
     let clues = undefined;
+    let error = undefined;
     if (category !== undefined) {
-        clues = await getClues(category, nresults, false);
+        clues = await getClues(category, nresults, false).catch((errorData) => {
+            error = errorData.message;
+        });
     }
 
     return (
@@ -28,7 +31,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
                 <h1>dashboard</h1>
                 <h2>moderator dashboard</h2>
             </div>
-            <Dashboard category={category} nresults={nresults} clues={clues} />
+            <Dashboard category={category} nresults={nresults} clues={clues} error={error} />
             <Top />
             <Copyright />
         </div>

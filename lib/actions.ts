@@ -5,7 +5,7 @@ import { auth0 } from "./auth0";
 
 export async function updateClue(clue_id: string, clue: ClueUpdateType) {
     const { token } = await auth0.getAccessToken();
-    await fetch(
+    const response = await fetch(
         `${process.env.API_ENDPOINT}/clues/${clue_id}`,
         {
             method: "PATCH",
@@ -16,11 +16,16 @@ export async function updateClue(clue_id: string, clue: ClueUpdateType) {
             body: JSON.stringify(clue),
         }
     )
+    if (!response.ok) {
+        const error = await response.json();
+        console.log(`${response.status} ${error.message || "Unknown error; please check API logs."}`);
+        throw new Error;
+    }
 }
 
 export async function deleteClue(clue_id: string) {
     const { token } = await auth0.getAccessToken();
-    await fetch(
+    const response = await fetch(
         `${process.env.API_ENDPOINT}/clues/${clue_id}`,
         {
             method: "DELETE",
@@ -29,4 +34,9 @@ export async function deleteClue(clue_id: string) {
             },
         }
     )
+    if (!response.ok) {
+        const error = await response.json();
+        console.log(`${response.status} ${error.message || "Unknown error; please check API logs."}`);
+        throw new Error;
+    }
 }

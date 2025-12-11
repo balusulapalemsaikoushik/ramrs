@@ -11,6 +11,18 @@ interface DashboardProps {
     category?: string
     nresults?: string
     clues?: ClueType[]
+    error?: string
+}
+
+interface MessageType {
+    visible: boolean
+    type: "success" | "error"
+    content: string
+}
+
+interface MessageProps {
+    message: MessageType
+    setMessage: React.Dispatch<SetStateAction<MessageType>>
 }
 
 interface ConfirmationType {
@@ -25,6 +37,7 @@ interface ConfirmationType {
 interface ConfirmationProps {
     confirmation: ConfirmationType
     setConfirmation: React.Dispatch<SetStateAction<ConfirmationType>>
+    setMessage: React.Dispatch<SetStateAction<MessageType>>
 }
 
 interface ClueProps {
@@ -45,8 +58,11 @@ interface ActionButtonProps {
     onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-export default function Dashboard({ category, nresults, clues }: DashboardProps) {
+export default function Dashboard({ category, nresults, clues, error }: DashboardProps) {
     const [confirmation, setConfirmation] = useState({} as ConfirmationType);
+    const [message, setMessage] = useState(
+        (error !== undefined ? { visible: true, type: "error", content: error } : {}) as MessageType
+    );
 
     const categoryKeys = Object.keys(categories);
     const categoryOptions = [];
@@ -133,7 +149,8 @@ export default function Dashboard({ category, nresults, clues }: DashboardProps)
                     </div>
                 )}
             </div>
-            <Confirmation confirmation={confirmation} setConfirmation={setConfirmation} />
+            <Confirmation confirmation={confirmation} setConfirmation={setConfirmation} setMessage={setMessage} />
+            <Message message={message} setMessage={setMessage} />
         </>
     );
 }
@@ -149,22 +166,27 @@ function FilterButton({ text, onClick }: { text: string, onClick: MouseEventHand
     )
 }
 
-function Confirmation({ confirmation, setConfirmation }: ConfirmationProps) {
-    const confirm = async () => {
-        if (confirmation.action == "verification") {
-            await updateClue(confirmation.clue_id, confirmation.data!);
-        } else if (confirmation.action == "deletion") {
-            await deleteClue(confirmation.clue_id);
-        }
-        setConfirmation({visible: false} as ConfirmationType);
-        confirmation.setClueVisible(false);
-    }
-
+function Confirmation({ confirmation, setConfirmation, setMessage }: ConfirmationProps) {
     const hide = useCallback(() => {
-        setConfirmation((confirmation) => {
-            return {...confirmation, visible: false};
-        });
+        setConfirmation({ visible: false } as ConfirmationType);
     }, [setConfirmation]);
+
+    const confirm = async () => {
+        (async () => {
+            if (confirmation.action == "verification") {
+                await updateClue(confirmation.clue_id, confirmation.data!);
+            } else if (confirmation.action == "deletion") {
+                await deleteClue(confirmation.clue_id);
+            }
+        })().then(() => {
+            confirmation.setClueVisible(false);
+            setMessage({ visible: true, type: "success", content: "Your changes were made successfully." });
+        }).catch(() => {
+            setMessage({ visible: true, type: "error", content: `Something went wrong when making your changes.` });
+        }).finally(() => {
+            hide();
+        });
+    };
 
     useEffect(() => {
         if (confirmation.visible == true) {
@@ -177,24 +199,46 @@ function Confirmation({ confirmation, setConfirmation }: ConfirmationProps) {
     }, [confirmation.visible, hide]);
 
     return (
-        <div className={
-            `z-300
-            ${confirmation.visible ? "block" : "hidden"}
-            bg-background-primary
-            fixed
-            bottom-0
-            w-full
-            p-5`
-        }>
-            <p className="text-center md:text-left">
-                Confirm your {confirmation.action} of clue &quot;{confirmation.clue}&quot;?
-            </p>
-            <div className="mt-5 grid grid-cols-2 md:flex md:justify-end gap-2">
+        <div className={`dialog ${confirmation.visible ? "block" : "hidden"} bg-background-primary`}>
+            <p>Confirm your {confirmation.action} of clue &quot;{confirmation.clue}&quot;?</p>
+            <div className="button-bar grid grid-cols-2 md:flex">
                 <button className="button cursor-pointer" onClick={confirm}>Confirm</button>
                 <button className="button cursor-pointer" onClick={hide}>Cancel</button>
             </div>
         </div>
     );
+}
+
+function Message({ message, setMessage }: MessageProps) {
+    let className = undefined;
+    if (message.type == "success") {
+        className = "bg-confirmation-subtle text-confirmation";
+    } else if (message.type == "error") {
+        className = "bg-error-subtle text-error";
+    }
+
+    const hide = useCallback(() => {
+        setMessage({ visible: false } as MessageType);
+    }, [setMessage]);
+
+    useEffect(() => {
+        if (message.visible) {
+            window.addEventListener("keydown", (event) => {
+                if (event.key == "Escape") {
+                    hide();
+                }
+            });
+        }
+    }, [message.visible, hide]);
+
+    return (
+        <div className={`dialog ${message.visible ? "block" : "hidden"} ${className}`}>
+            <p>{message.content}</p>
+            <div className="button-bar flex flex-col md:flex-row">
+                <button className="button cursor-pointer" onClick={hide}>OK</button>
+            </div>
+        </div>
+    )
 }
 
 function Clue({ clue, setConfirmation }: ClueProps) {
@@ -263,14 +307,14 @@ function Input({ label, value, onChange, options }: InputProps) {
     }
 
     return (
-        <div className="flex flex-col gap-1">
-            <p className="text-xs">{label}</p>
+        <label className="flex flex-col gap-1">
+            <span className="text-xs">{label}</span>
             {optionElements.length > 0 ? (
                 <select className="input" value={value} onChange={onChange}>{optionElements}</select>
             ) : (
                 <input className="input" value={value} onChange={onChange} placeholder={label} />
             )}
-        </div>
+        </label>
     )
 }
 

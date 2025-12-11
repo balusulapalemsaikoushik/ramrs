@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import "server-only";
 
 export async function getClues(category: string, nresults?: string, verified?: boolean) {
@@ -14,13 +13,19 @@ export async function getClues(category: string, nresults?: string, verified?: b
         endpoint += `?${params.toString()}`;
     }
 
-    return await fetch(
-        endpoint,
-        { cache: "no-store" }
-    ).then((response) => {
-        if (response.status == 400 || response.status == 404 || response.status == 422) {
-            notFound();
+    const response = await fetch(endpoint, { cache: "no-store" });
+    if (!response.ok) {
+        let message = "Something went wrong.";
+        if (response.status == 400) {
+            const error = await response.json();
+            message = `400: ${error.detail || "Bad Request"}`;
+        } else if (response.status == 404) {
+            const error = await response.json();
+            message = `404: ${error.detail || "Not Found"}`;
+        } else if (response.status == 422) {
+            message = "422: One or more of your query strings aren't in the correct format. Please enter acceptable values.";
         }
-        return response.json();
-    });
+        throw new Error(message);
+    }
+    return await response.json();
 }

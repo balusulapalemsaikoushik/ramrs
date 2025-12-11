@@ -11,7 +11,9 @@
     --color-link: var(--color-slate-500);
     --color-warning: var(--color-amber-500);
     --color-confirmation: var(--color-green-600);
+    --color-confirmation-subtle: var(--color-green-100);
     --color-error: var(--color-red-600);
+    --color-error-subtle: var(--color-red-100);
 }
 
 @layer theme {
@@ -25,7 +27,9 @@
             --color-link: var(--color-gray-400);
             --color-warning: var(--color-amber-300);
             --color-confirmation: var(--color-emerald-300);
+            --color-confirmation-subtle: var(--color-emerald-950);
             --color-error: var(--color-rose-500);
+            --color-error-subtle: var(--color-rose-950);
         }
     }
 }
@@ -85,4 +89,16 @@ th, td {
 
 select.input {
     @apply cursor-pointer;
+}
+
+.dialog {
+    @apply z-300 fixed bottom-0 w-full p-5;
+}
+
+.dialog p {
+    @apply text-center md:text-left;
+}
+
+.button-bar {
+    @apply mt-5 md:justify-end gap-2;
 }
