@@ -10,8 +10,16 @@ import { ChangeEventHandler, MouseEventHandler, SetStateAction, useCallback, use
 interface DashboardProps {
     category?: string
     nresults?: string
+    clue?: string
     clues?: ClueType[]
     error?: string
+}
+
+interface TabProps {
+    tab: string
+    text: string
+    currentTab: string
+    setTab: React.Dispatch<SetStateAction<string>>
 }
 
 interface MessageType {
@@ -58,7 +66,7 @@ interface ActionButtonProps {
     onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-export default function Dashboard({ category, nresults, clues, error }: DashboardProps) {
+export default function Dashboard({ category, nresults, clue, clues, error }: DashboardProps) {
     const [confirmation, setConfirmation] = useState({} as ConfirmationType);
     const [message, setMessage] = useState(
         (error !== undefined ? { visible: true, type: "error", content: error } : {}) as MessageType
@@ -71,26 +79,47 @@ export default function Dashboard({ category, nresults, clues, error }: Dashboar
         categoryOptions.push(<option key={category}>{category}</option>);
     }
 
+    const [tab, setTab] = useState(clue !== undefined ? "clue" : "filters");
+
     const [searchCategory, setSearchCategory] = useState(category !== undefined ? category : categoryKeys[0]);
     const [searchNresults, setSearchNresults] = useState(nresults !== undefined ? nresults : "100");
 
+    const [searchClue, setSearchClue] = useState(clue !== undefined ? clue : "");
+
     const pathname = usePathname();
+
     const search = () => {
-        if (searchNresults.length > 0) {
-            const nresultsNumber = Number(searchNresults);
-            if (!isNaN(nresultsNumber) && Number.isInteger(nresultsNumber)) {
-                if (nresultsNumber >= 0) {
-                    const params = new URLSearchParams();
-                    params.set("category", searchCategory);
-                    params.set("nresults", nresultsNumber.toString());
-                    window.location.href = `${pathname}?${params.toString()}`;
+        if (tab === "filters") {
+            if (searchNresults.length > 0) {
+                const nresultsNumber = Number(searchNresults);
+                if (!isNaN(nresultsNumber) && Number.isInteger(nresultsNumber)) {
+                    if (nresultsNumber >= 0) {
+                        const params = new URLSearchParams();
+                        params.set("category", searchCategory);
+                        params.set("nresults", nresultsNumber.toString());
+                        window.location.href = `${pathname}?${params.toString()}`;
+                    }
                 }
+            }
+        } else if (tab === "clue") {
+            if (searchClue.length > 0) {
+                const params = new URLSearchParams();
+                params.set("clue", searchClue);
+                window.location.href = `${pathname}?${params.toString()}`;
             }
         }
     };
+
+    const onFiltersKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key == "Enter") {
+            search();
+        }
+    }
+
     const clear = () => {
         window.location.href = pathname;
     }
+
     const refresh = () => {
         window.location.reload();
     }
@@ -99,38 +128,62 @@ export default function Dashboard({ category, nresults, clues, error }: Dashboar
     if (clues !== undefined) {
         for (let i = 0; i < clues.length; i++) {
             const clue = clues[i];
-            clueElements.push(<Clue key={i} clue={clue} setConfirmation={setConfirmation} />);
+            if (!clue.verified) {
+                clueElements.push(<Clue key={i} clue={clue} setConfirmation={setConfirmation} />);
+            }
         }
     }
 
     return (
         <>
             <div>
-                <div className="filter-bar justify-end">
-                    <label>
-                        {category !== undefined ? (
-                            <Link className="link" href={`/${category}`}>Category:</Link>
-                        ) : (
-                            <span>Category:</span>
-                        )}
-                        <span> </span>
-                        <select
-                            className="input"
-                            value={searchCategory}
-                            onChange={(e) => setSearchCategory(e.target.value)}
-                        >
-                            {categoryOptions}
-                        </select>
-                    </label>
-                    <label>
-                        <input
-                            className="input w-16"
-                            type="text"
-                            value={searchNresults}
-                            onChange={(e) => setSearchNresults(e.target.value)}
-                        />
-                        <span> results</span>
-                    </label>
+                <div className="filters bg-background-secondary p-5">
+                    <div>
+                        <span>Search using </span>
+                        <div className="inline-flex rounded overflow-hidden border border-background-primary">
+                            <Tab tab="filters" text="Filters" currentTab={tab} setTab={setTab} />
+                            <Tab tab="clue" text="Exact Clue" currentTab={tab} setTab={setTab} />
+                        </div>
+                    </div>
+                    <div className="md:ml-auto" onKeyDown={onFiltersKeyDown}>
+                        <div className={tab === "filters" ? "filters" : "hidden"}>
+                            <label>
+                                {category !== undefined ? (
+                                    <Link className="link" href={`/${category}`}>Category:</Link>
+                                ) : (
+                                    <span>Category:</span>
+                                )}
+                                <span> </span>
+                                <select
+                                    className="input"
+                                    value={searchCategory}
+                                    onChange={(e) => setSearchCategory(e.target.value)}
+                                >
+                                    {categoryOptions}
+                                </select>
+                            </label>
+                            <label>
+                                <input
+                                    className="input w-16"
+                                    type="text"
+                                    value={searchNresults}
+                                    onChange={(e) => setSearchNresults(e.target.value)}
+                                />
+                                <span> results</span>
+                            </label>
+                        </div>
+                        <div className={tab === "clue" ? "filters": "hidden"}>
+                            <label>
+                                <span>Clue: </span>
+                                <input
+                                    className="input"
+                                    type="text"
+                                    value={searchClue}
+                                    onChange={(e) => setSearchClue(e.target.value)}
+                                />
+                            </label>
+                        </div>
+                    </div>
                     <div className="grid grid-cols-2 gap-1 md:flex">
                         <FilterButton text="Search" onClick={search} />
                         <FilterButton text="Clear" onClick={clear} />
@@ -145,13 +198,32 @@ export default function Dashboard({ category, nresults, clues, error }: Dashboar
                     </div>
                 ) : (
                     <div className="p-10 text-center">
-                        <p>Perform a search to get started...</p>
+                        <p>
+                            {(category !== undefined || clue !== undefined) ? (
+                                "Your search returned no unverified clues."
+                            ) : (
+                                "Perform a search to get started..."
+                            )}
+                        </p>
                     </div>
                 )}
             </div>
             <Confirmation confirmation={confirmation} setConfirmation={setConfirmation} setMessage={setMessage} />
             <Message message={message} setMessage={setMessage} />
         </>
+    );
+}
+
+function Tab({ tab, text, currentTab, setTab }: TabProps) {
+    return (
+        <button className={
+            `px-3
+            py-2
+            cursor-pointer
+            ${tab === currentTab ? "bg-background-secondary" : "bg-background-primary"}`
+        } onClick={() => setTab(tab)}>
+            {text}
+        </button>
     );
 }
 

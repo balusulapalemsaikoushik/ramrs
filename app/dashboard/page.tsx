@@ -4,9 +4,13 @@ import { redirect } from "next/navigation";
 import Dashboard from "./_components/dashboard";
 import Top from "../_components/top";
 import Copyright from "../_components/copyright";
-import { getClues } from "@/lib/clues";
+import { getClue, getClues } from "@/lib/clues";
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ category: string, nresults?: string }> }) {
+interface PageProps {
+    searchParams: Promise<{ category?: string, nresults?: string, clue?: string }>
+}
+
+export default async function Page({ searchParams }: PageProps) {
     const session = await auth0.getSession();
 
     if (!session) {
@@ -15,13 +19,26 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
         redirect(`/auth/login?${params.toString()}`);
     }
 
-    const { category, nresults } = await searchParams;
+    const { category, nresults, clue } = await searchParams;
     let clues = undefined;
     let error = undefined;
-    if (category !== undefined) {
-        clues = await getClues(category, nresults, false).catch((errorData) => {
-            error = errorData.message;
-        });
+    if ((clue !== undefined) && (category !== undefined || nresults !== undefined)) {
+        error = "You are trying to search for a clue and apply filters at the same time. Please choose one to continue.";
+    } else {
+        if (category !== undefined) {
+            clues = await getClues(category, nresults, false).catch((errorData) => {
+                error = errorData.message;
+            });
+        } else if (clue !== undefined) {
+            if (clue.length == 0) {
+                error = "No clue was provided. Please search for a valid one."
+            } else {
+                const result = await getClue(clue).catch((errorData) => {
+                    error = errorData.message;
+                });
+                clues = result !== undefined ? [result] : undefined;
+            }
+        }
     }
 
     return (
@@ -31,7 +48,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
                 <h1>dashboard</h1>
                 <h2>moderator dashboard</h2>
             </div>
-            <Dashboard category={category} nresults={nresults} clues={clues} error={error} />
+            <Dashboard category={category} nresults={nresults} clue={clue} clues={clues} error={error} />
             <Top />
             <Copyright />
         </div>

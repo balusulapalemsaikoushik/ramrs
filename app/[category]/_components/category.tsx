@@ -231,7 +231,7 @@ function Filters({ filters, setFilters }: FiltersProps) {
     };
 
     return (
-        <div className="filter-bar">
+        <div className="filters bg-background-secondary p-5">
             <CheckboxFilter
                 label="Show wildcard clues"
                 info="These clues are too broad to guarantee a single answer; however, the answer you see is probably a good guess."

@@ -79,8 +79,8 @@ th, td {
     @apply text-link underline;
 }
 
-.filter-bar {
-    @apply flex flex-col md:flex-row gap-3 bg-background-secondary p-5;
+.filters {
+    @apply flex flex-col md:flex-row gap-3;
 }
 
 .input {

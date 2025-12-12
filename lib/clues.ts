@@ -1,5 +1,21 @@
 import "server-only";
 
+export async function getClue(clue: string) {
+    const response = await fetch(
+        `${process.env.API_ENDPOINT}/clues/${clue}`,
+        { cache: "no-store" }
+    );
+    if (!response.ok) {
+        let message = "Something went wrong.";
+        if (response.status == 404) {
+            const error = await response.json();
+            message = `404: ${error.detail || "Not Found"}`;
+        }
+        throw new Error(message);
+    }
+    return await response.json();
+}
+
 export async function getClues(category: string, nresults?: string, verified?: boolean) {
     let endpoint = `${process.env.API_ENDPOINT}/categories/${category}`;
     const params = new URLSearchParams();
