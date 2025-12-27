@@ -6,10 +6,14 @@
     --color-foreground: var(--color-black);
     --color-background-primary: var(--color-slate-100);
     --color-background-secondary: var(--color-white);
+    --color-background-tertiary: var(--color-slate-50);
     --color-version: var(--color-sky-600);
     --color-link: var(--color-slate-500);
     --color-warning: var(--color-amber-500);
     --color-confirmation: var(--color-green-600);
+    --color-confirmation-subtle: var(--color-green-100);
+    --color-error: var(--color-red-600);
+    --color-error-subtle: var(--color-red-100);
 }
 
 @layer theme {
@@ -18,10 +22,14 @@
             --color-foreground: var(--color-white);
             --color-background-primary: var(--color-gray-900);
             --color-background-secondary: var(--color-gray-800);
+            --color-background-tertiary: color-mix(in oklch, var(--color-gray-800), var(--color-gray-900));
             --color-version: var(--color-sky-400);
             --color-link: var(--color-gray-400);
             --color-warning: var(--color-amber-300);
             --color-confirmation: var(--color-emerald-300);
+            --color-confirmation-subtle: var(--color-emerald-950);
+            --color-error: var(--color-rose-500);
+            --color-error-subtle: var(--color-rose-950);
         }
     }
 }
@@ -40,15 +48,19 @@ body {
 }
 
 h1, h2 {
-    @apply text-center md:text-left;
+    @apply text-center md:text-left leading-tight;
 }
 
 h1 {
-    @apply text-6xl font-black;
+    @apply text-4xl md:text-6xl font-black;
 }
 
 h2 {
     @apply text-3xl font-light;
+}
+
+h3 {
+    @apply text-xl leading-tight font-semibold;
 }
 
 th, td {
@@ -56,5 +68,37 @@ th, td {
 }
 
 .navbar-item {
-    @apply block md:inline hover:cursor-pointer p-5;
+    @apply block md:inline cursor-pointer text-left p-5;
+}
+
+.button {
+    @apply p-5 bg-background-secondary rounded text-center;
+}
+
+.link {
+    @apply text-link underline;
+}
+
+.filters {
+    @apply flex flex-col md:flex-row gap-3;
+}
+
+.input {
+    @apply bg-background-primary p-2 rounded;
+}
+
+select.input {
+    @apply cursor-pointer;
+}
+
+.dialog {
+    @apply z-300 fixed bottom-0 w-full p-5;
+}
+
+.dialog p {
+    @apply text-center md:text-left;
+}
+
+.button-bar {
+    @apply mt-5 md:justify-end gap-2;
 }
