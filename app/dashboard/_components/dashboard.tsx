@@ -136,7 +136,7 @@ export default function Dashboard({ category, nresults, clue, clues, error }: Da
 
     return (
         <>
-            <div>
+            <div className="pb-20">
                 <div className="filters bg-background-secondary p-5">
                     <div>
                         <span>Search using </span>

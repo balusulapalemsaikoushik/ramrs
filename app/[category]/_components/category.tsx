@@ -75,7 +75,7 @@ export default function Category({ name, data, isModerator }: CategoryProps) {
                 </div>
             </div>
             <Filters filters={filters} setFilters={setFilters} />
-            <div>
+            <div className="pb-15">
                 <div id={name} className="flex p-5 bg-background-secondary cursor-pointer" onClick={() => setExpanded((expanded) => !expanded)}>
                     <h4>{name}</h4>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-auto">

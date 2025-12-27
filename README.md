@@ -1,8 +1,8 @@
-# ramrs: the original qb stock list
+# ramrs - the original qb stock list
 
 ## Introduction
 
-ramrs is a grand list of Quiz Bowl (QB) "stock," or clues that frequently appear in QB questions and generally point to a single answer. The current database has ~60k clues (and growing!) and serves as a helpful study tool for players looking to win their next QB tournament.
+ramrs is a grand list of quiz bowl (QB) "stock," or clues that frequently appear in QB questions and generally point to a single answer. The current database has ~60k clues (and growing!) and serves as a helpful study tool for players looking to win their next QB tournament.
 
 ## Project Details
 

@@ -14,7 +14,8 @@ export default async function Home() {
                 <div className="p-10">
                     <h1>ramrs</h1>
                     <h2>the original qb stock list</h2>
-                    <p className="mt-10">ramrs is a grand list of Quiz Bowl (QB) &quot;stock,&quot; or clues that frequently appear in QB questions and generally point to a single answer. The current database has ~60k clues (and growing!) and serves as a helpful study tool for players looking to win their next QB tournament. To get started, click on one of the categories below:</p>
+                    <p className="mt-10">ramrs is a grand list of quiz bowl (QB) &quot;stock,&quot; or clues that frequently appear in QB questions and generally point to or reference a particular answer or topic. The current database has ~60k clues (and growing!) which you can look over and even export to external flashcard apps so that you can master must-know quiz bowl concepts. Whether you&apos;re a beginner looking for a place to start your QB journey or an experienced player cramming in last-minute information before a tournament, ramrs is a helpful study tool for those interested in this beautiful game.</p>
+                    <p className="mt-10">To get started, click on one of the categories below:</p>
                     <div className="mt-10 flex flex-col md:flex-row gap-5 flex-wrap justify-center">
                         <Link className="button" href="/history">History</Link>
                         <Link className="button" href="/literature">Literature</Link>
@@ -28,22 +29,18 @@ export default async function Home() {
                         <Link className="button" href="/religion">Religion</Link>
                     </div>
                 </div>
-                <div className="bg-background-tertiary grid md:grid-cols-2">
+                <div className="bg-background-tertiary pb-15">
                     <div className="p-10">
                         <h2>frequently asked questions</h2>
-                        <FAQSection title="Where are QB questions downloaded from?">
-                            Question sets are downloaded off of the <Link className="link" href="https://quizbowlpackets.com/" target="_blank">High School Quizbowl Packet Archive</Link> and parsed by a script that converts them into a more accessible format. ramrs is not affiliated with the Quizbowl Packet Archive or its partners and sponsors.
+                        <FAQSection title="How do you gather stock clues?">
+                            Clues are automatically extracted from across hundreds of QB question sets made accessible to the public over the years. These question packets are downloaded off of the <Link className="link" href="https://quizbowlpackets.com/" target="_blank">High School Quizbowl Packet Archive</Link> and fed through a series of data preprocessing and machine learning steps before another machine learning model extracts the actual clues. The clues are then ranked based on their frequency across questions on the backend, after which they are made visible on this website. ramrs is not affiliated with the Quizbowl Packet Archive or its partners and sponsors.
                         </FAQSection>
-                        <FAQSection title="How are clues extracted from QB questions?">
-                            The clue extraction process combines regular expression-based pattern matching and natural language processing steps.
+                        <FAQSection title="So, how do you verify the accuracy of these clues?">
+                            Naturally, anything automatically generated is prone to error, and the same goes for the tens of thousands of clues hosted on ramrs. To account for this, we have a dedicated team of players that moderate the website, updating and deleting clues as needed. Each moderator is an expert at their subject, and we specifically ensure that clue-answer pairs are accurate (and resemble what you&apos;d actually see at a QB tournament) before verifying them.
                         </FAQSection>
-                        <FAQSection title="How do we update clues?">
-                            We have a dedicated team of players that delete unnecessary clues and maintain existing ones to ensure that ramrs only contains pure &quot;stock.&quot;
+                        <FAQSection title="How can I contribute?">
+                            Right now, the moderator team is only limited to a handful of selected players. However, the code that ramrs runs on certainly isn&apos;t perfect, and we&apos;re planning on revamping the underlying algorithms in a future update that could substantially increase the size of the database. If you would like to contribute to this effort, please look into the codebase <Link className="link" href="https://github.com/balusulapalemsaikoushik/ramrs" target="_blank">here</Link>.
                         </FAQSection>
-                    </div>
-                    <div className="p-10">
-                        <h2>contributing</h2>
-                        <p className="mt-10">ramrs isn&apos;t perfect. If you would like to contribute to the ramrs codebase, see the <Link className="link" href="https://github.com/balusulapalemsaikoushik/ramrs" target="_blank">GitHub repo</Link> for more information.</p>
                     </div>
                 </div>
             </div>
